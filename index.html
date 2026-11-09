@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asesmen SKI Kelas XI - Semester 1</title>
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{margin:0;background:#0f172a}
+.container{max-width:900px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.2);margin-top:16px}
+.header{background:#065f46;color:#fff;border-radius:16px;padding:22px;text-align:center}
+.header h1{margin:0;font-size:26px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;margin:8px 0;font-size:15px}
+button{background:#059669;color:#fff;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-weight:700;width:100%;margin-top:10px;font-size:15px}
+button.secondary{background:#334155}
+button.danger{background:#dc2626}
+button.outline{background:#fff;color:#059669;border:2px solid #059669}
+.flex{display:flex;gap:10px}.flex button{flex:1}
+.rule{background:#f0fdf4;border:1px solid #bbf7d0;padding:10px 12px;border-radius:10px;margin:6px 0}
+.badge{display:inline-block;background:#fef3c7;padding:6px 12px;border-radius:20px;font-weight:700}
+.q{font-size:17px;line-height:1.7;font-weight:600}
+.opt{display:block;background:#f8fafc;border:2px solid #e2e8f0;padding:12px;border-radius:12px;margin:8px 0;cursor:pointer;line-height:1.6}
+.opt:hover{border-color:#059669}.opt.selected{background:#d1fae5;border-color:#059669}
+.opt input{width:auto;margin-right:8px}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:12px}
+.grid button{padding:8px 0;font-size:13px;background:#e2e8f0;color:#000}.grid button.done{background:#059669;color:#fff}.grid button.active{outline:3px solid #f59e0b}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border:1px solid #ddd;padding:8px;text-align:left}
+#blackScreen{position:fixed;inset:0;background:#000;color:#fff;z-index:9999;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;flex-direction:column}
+#blackScreen h1{font-size:28px;color:#ef4444}
+.hidden{display:none}
+.timer{position:sticky;top:0;background:#ef4444;color:#fff;padding:10px;text-align:center;font-weight:800;border-radius:10px;z-index:10}
+.small{font-size:13px;color:#64748b}
+</style>
+</head>
+<body>
+<div id="blackScreen"><h1>⚠️ PELANGGARAN TERDETEKSI</h1><p id="blackMsg">Layar dikunci karena aktivitas mencurigakan.</p><p>Hubungi pengawas / Guru untuk membuka kembali.</p><button onclick="unlockBlack()" style="width:auto;background:#fff;color:#000">Saya Mengerti - Kembali (Tercatat)</button></div>
+
+<div class="container">
+<div class="header">
+<h1>🕌 ASESMEN SEJARAH KEBUDAYAAN ISLAM</h1>
+<p>Kelas XI • Semester 1 • 50 Soal Pilihan Ganda • 90 Menit</p>
+<p><span class="badge">PASCASARJANA X JEJAK CINEMA FILM • PKM-KI X SCU</span></p>
+</div>
+
+<div id="page-home" class="card">
+<h2>📋 Portal Ujian - 10 Peraturan Wajib</h2>
+<div class="rule"><b>1.</b> Ujian bersifat individu, dilarang bekerja sama, mencontek, atau meminta jawaban dari orang lain.</div>
+<div class="rule"><b>2.</b> Dilarang menyalin (Copy-Paste), memfoto, atau screenshot soal ujian dalam bentuk apapun.</div>
+<div class="rule"><b>3.</b> Dilarang pindah tab, pindah aplikasi, membuka Google, ChatGPT, atau halaman lain saat ujian berlangsung.</div>
+<div class="rule"><b>4.</b> Dilarang menggunakan mode belah layar (Split Screen) atau membuka dua jendela sekaligus.</div>
+<div class="rule"><b>5.</b> Dilarang mengaktifkan klik kanan, inspect element, atau alat pengembang (Developer Tools).</div>
+<div class="rule"><b>6.</b> Waktu ujian 90 menit. Jika waktu habis, jawaban otomatis terkirim dan tidak dapat diubah.</div>
+<div class="rule"><b>7.</b> Setiap pelanggaran akan dicatat sistem, layar akan menjadi HITAM dan mengurangi nilai / diskualifikasi.</div>
+<div class="rule"><b>8.</b> Wajib mengisi Nama Lengkap, Kelas, dan Nomor Ujian dengan benar sebelum memulai.</div>
+<div class="rule"><b>9.</b> Pastikan koneksi internet dan baterai perangkat mencukupi. Jangan refresh halaman saat ujian.</div>
+<div class="rule"><b>10.</b> Setelah selesai, klik tombol SELESAI. Hasil akan tersimpan otomatis dan dapat dilihat guru di Dashboard.</div>
+<label><input type="checkbox" id="agree"> Saya sudah membaca dan menyetujui 10 peraturan di atas.</label>
+<h3>Identitas Peserta</h3>
+<input id="nama" placeholder="Nama Lengkap - Contoh: Ahmad Fauzi">
+<select id="kelas"><option value="">-- Pilih Kelas --</option><option>XI-A</option><option>XI-B</option><option>XI-C</option><option>XI-D</option><option>XI-E</option><option>XI-F</option></select>
+<input id="noUjian" placeholder="No Ujian - Contoh: SKI-001">
+<button onclick="mulaiUjian()">▶️ MULAI UJIAN SEKARANG</button>
+<button class="secondary" onclick="showPage('page-guru-login')">👨‍🏫 Masuk Dashboard Guru</button>
+<p class="small">Sistem keamanan aktif. Jangan mencoba menyalin soal atau pindah tab.</p>
+</div>
+
+<div id="page-guru-login" class="card hidden">
+<h2>🔐 Dashboard Guru</h2>
+<input id="guruId" placeholder="ID Guru">
+<input id="guruPass" type="password" placeholder="Password (ID yang sama)">
+<button onclick="loginGuru()">Masuk Dashboard</button>
+<button class="outline" onclick="showPage('page-home')">← Kembali ke Portal Siswa</button>
+<p class="small">ID Demo: AGUNG121002 | Password: AGUNG121002</p>
+</div>
+
+<div id="page-guru" class="card hidden">
+<h2>📊 Dashboard Guru - AGUNG121002</h2>
+<p>Rekap Nilai Siswa Tersimpan di Perangkat Ini (LocalStorage)</p>
+<div id="rekap"></div>
+<button class="danger" onclick="hapusData()">Hapus Semua Data Nilai</button>
+<h3>⬆️ Upload Soal Baru (Ganti 50 Soal)</h3>
+<p class="small">Format JSON: [{"q":"...","a":["...","...","...","...","..."],"kunci":0}] - kunci 0=A, 1=B, dst.</p>
+<textarea id="uploadSoal" rows="6" placeholder='Paste JSON soal di sini...'></textarea>
+<button onclick="uploadSoalBaru()">Upload & Simpan Soal Baru</button>
+<button onclick="resetSoal()">Kembalikan ke Soal Default SKI</button>
+<button class="secondary" onclick="downloadTemplate()">Download Template JSON Soal</button>
+<button class="outline" onclick="showPage('page-home')">Keluar Dashboard</button>
+</div>
+
+<div id="page-ujian" class="card hidden">
+<div class="timer" id="timer">Sisa Waktu: 90:00 | Pelanggaran: 0</div>
+<h3 id="infoPeserta"></h3>
+<p><b id="nomorSoal">Soal 1 / 50</b></p>
+<div class="q" id="soalText"></div>
+<div id="opsi"></div>
+<div class="flex"><button class="secondary" onclick="prevSoal()">← Sebelumnya</button><button onclick="nextSoal()">Berikutnya →</button></div>
+<div class="grid" id="navSoal"></div>
+<button class="danger" onclick="selesaiUjian()">✅ SELESAI & KIRIM JAWABAN</button>
+</div>
+
+<div id="page-hasil" class="card hidden">
+<h2>🎉 Hasil Ujian</h2>
+<div id="hasilText"></div>
+<button onclick="showPage('page-home')">Kembali ke Portal</button>
+</div>
+</div>
+
+<script>
+let soalDefault = [];
+const bank = [
+["Daulah Umayyah","Pada masa Bani Umayyah pusat pemerintahan dipindahkan dari Madinah ke Damaskus dan terjadi perluasan wilayah yang sangat pesat hingga ke Spanyol, Afrika Utara, dan Asia Tengah. Kebijakan ini membawa dampak besar terhadap perkembangan ilmu pengetahuan dan administrasi pemerintahan Islam. Berdasarkan uraian tersebut, faktor utama yang menyebabkan Daulah Umayyah mampu memperluas wilayahnya dengan cepat adalah...",["Adanya sistem militer yang kuat dan terorganisir serta kepemimpinan khalifah yang tegas","Karena wilayah lain tidak memiliki tentara sama sekali","Karena umat Islam saat itu hanya fokus berdagang","Karena tidak ada perlawanan dari bangsa lain","Karena bantuan dari bangsa Romawi"],0],
+["Muawiyah bin Abi Sufyan","Muawiyah bin Abi Sufyan dikenal sebagai pendiri Daulah Umayyah. Ia mengubah sistem pemerintahan dari sistem khilafah yang berdasarkan musyawarah menjadi sistem kerajaan yang bersifat turun-temurun. Perubahan ini menimbulkan pro dan kontra di kalangan umat Islam. Dampak positif dari sistem pemerintahan yang diterapkan Muawiyah bagi stabilitas negara adalah...",["Terciptanya stabilitas politik dan kesinambungan kepemimpinan yang lebih terjaga","Terjadinya perang saudara terus-menerus","Hilangnya seluruh wilayah kekuasaan Islam","Masyarakat menjadi tidak peduli dengan agama","Pemerintahan menjadi lemah"],0],
+["Daulah Abbasiyah","Daulah Abbasiyah berpusat di Baghdad dan dikenal sebagai masa keemasan Islam. Pada masa ini, ilmu pengetahuan berkembang pesat melalui Baitul Hikmah, tempat para ilmuwan menerjemahkan karya-karya Yunani, Persia, dan India. Salah satu khalifah Abbasiyah yang paling berperan dalam memajukan ilmu pengetahuan adalah...",["Harun Ar-Rasyid dan Al-Ma'mun yang mendukung penerjemahan dan riset","Muawiyah bin Abi Sufyan","Abdul Malik bin Marwan","Umar bin Abdul Aziz saja","Yazid bin Muawiyah"],0],
+["Baitul Hikmah","Baitul Hikmah di Baghdad bukan hanya perpustakaan, tetapi juga pusat penelitian dan penerjemahan. Di tempat ini, ilmuwan Muslim dan non-Muslim bekerja sama mengembangkan astronomi, kedokteran, matematika, dan filsafat. Peran Baitul Hikmah bagi peradaban dunia adalah...",["Menjadi jembatan transfer ilmu pengetahuan dari dunia Timur ke Barat dan dasar kemajuan Eropa","Hanya sebagai tempat menyimpan buku khalifah","Tempat berkumpulnya para pedagang saja","Tempat pelatihan militer","Gedung untuk perayaan kerajaan"],0],
+["Peradaban Islam di Spanyol","Islam masuk ke Spanyol (Andalusia) pada tahun 711 M melalui Tariq bin Ziyad. Di sana, Islam berkembang pesat dan melahirkan kota-kota maju seperti Cordoba, Granada, dan Sevilla dengan perpustakaan besar, universitas, dan arsitektur megah. Bukti kemajuan peradaban Islam di Andalusia yang masih dapat disaksikan hingga kini adalah...",["Masjid Cordoba dan Istana Alhambra di Granada","Candi Borobudur","Tembok Besar Cina","Piramida Mesir","Menara Eiffel"],0],
+["Al-Khawarizmi","Muhammad bin Musa Al-Khawarizmi adalah ilmuwan Muslim yang karyanya tentang al-jabr menjadi dasar ilmu aljabar. Ia juga memperkenalkan sistem angka dan algoritma yang digunakan hingga saat ini dalam ilmu komputer. Kontribusi terbesar Al-Khawarizmi bagi dunia modern adalah...",["Peletakan dasar matematika aljabar dan konsep algoritma dalam teknologi komputer","Penemuan pesawat terbang","Penemuan listrik","Penemuan telepon","Penemuan mesin uap"],0],
+["Ibnu Sina","Ibnu Sina (Avicenna) menulis kitab Al-Qanun fi At-Tibb yang menjadi rujukan kedokteran di Eropa selama berabad-abad. Ia juga ahli filsafat dan astronomi. Keberhasilan Ibnu Sina menunjukkan bahwa...",["Peradaban Islam sangat menghargai ilmu pengetahuan dan menghasilkan ilmuwan multidisiplin","Ilmu kedokteran hanya berkembang di Eropa","Umat Islam tidak peduli dengan ilmu","Ibnu Sina hanya belajar dari satu guru","Kedokteran Islam tidak berpengaruh"],0],
+["Masuknya Islam ke Indonesia","Islam masuk ke Indonesia melalui jalur perdagangan, perkawinan, pendidikan, dan dakwah para wali. Para pedagang Muslim dari Gujarat, Persia, dan Arab berinteraksi dengan masyarakat pesisir. Teori yang paling kuat tentang masuknya Islam ke Indonesia melalui aktivitas perdagangan didukung oleh bukti...",["Adanya perkampungan Muslim dan makam-makam Islam kuno di daerah pesisir seperti Barus dan Gresik","Adanya candi Hindu di pedalaman","Adanya kerajaan Hindu-Buddha di Jawa","Tidak adanya bukti sejarah","Hanya cerita rakyat"],0],
+["Walisongo","Walisongo adalah sembilan wali yang menyebarkan Islam di Pulau Jawa dengan cara yang bijaksana, menggunakan pendekatan budaya seperti wayang, gamelan, dan tembang. Metode dakwah Walisongo yang menggunakan akulturasi budaya bertujuan agar...",["Islam dapat diterima masyarakat tanpa menimbulkan konflik dan masyarakat merasa tidak kehilangan budayanya","Masyarakat meninggalkan Islam","Budaya Jawa hilang","Islam hanya untuk kalangan bangsawan","Dakwah menjadi sulit"],0],
+["Kerajaan Demak","Kerajaan Demak adalah kerajaan Islam pertama di Jawa yang didirikan oleh Raden Patah. Demak menjadi pusat penyebaran Islam dan perdagangan. Salah satu peninggalan penting Kerajaan Demak adalah Masjid Agung Demak yang memiliki tiang penyangga (soko guru) yang dibuat oleh para wali. Fungsi Masjid Agung Demak pada masa itu selain sebagai tempat ibadah adalah...",["Sebagai pusat pemerintahan, pendidikan, dan penyebaran Islam di Jawa","Sebagai tempat penyimpanan senjata saja","Sebagai pasar","Sebagai istana raja saja","Sebagai benteng pertahanan saja"],0]
+];
+let tambahan=[
+["Samudera Pasai","Samudera Pasai dikenal sebagai kerajaan Islam pertama di Indonesia yang terletak di Aceh. Raja pertamanya adalah Sultan Malik as-Saleh. Pasai menjadi pusat perdagangan dan pendidikan Islam. Salah satu bukti Pasai sebagai pusat studi Islam adalah...",["Banyak ulama dan pelajar dari berbagai negara datang belajar ke Pasai","Pasai tidak memiliki ulama","Pasai hanya berdagang rempah","Pasai tidak dikenal dunia luar","Pasai menolak pendidikan"],0],
+["Aceh Darussalam","Kerajaan Aceh mencapai puncak kejayaan di bawah Sultan Iskandar Muda. Aceh dikenal sebagai Serambi Mekkah karena kuatnya syariat Islam. Peran Aceh dalam penyebaran Islam adalah...",["Mengirim ulama dan memperluas pengaruh Islam ke Sumatera dan Semenanjung Melayu","Menolak Islam","Menutup diri dari dunia luar","Hanya fokus pada perang","Tidak memiliki hubungan dagang"],0],
+["Mataram Islam","Mataram Islam di bawah Sultan Agung berusaha menyatukan Jawa dan melawan VOC. Sultan Agung juga memadukan kalender Hijriah dan Jawa. Kebijakan Sultan Agung ini menunjukkan...",["Upaya mengintegrasikan nilai Islam dengan budaya lokal untuk memperkuat identitas bangsa","Penolakan terhadap budaya Jawa","Sultan Agung tidak peduli agama","Mataram ingin menjadi kerajaan Hindu","Sultan Agung anti Islam"],0],
+["Pesantren","Pesantren menjadi lembaga pendidikan Islam tertua di Indonesia. Di pesantren, santri belajar Al-Qur'an, hadis, fiqih, dan akhlak. Peran pesantren dalam sejarah kebudayaan Islam Indonesia adalah...",["Menjaga tradisi keilmuan Islam dan melahirkan ulama serta pejuang kemerdekaan","Hanya tempat tidur santri","Tidak berperan dalam pendidikan","Tempat perdagangan","Hanya untuk kalangan kaya"],0],
+["Kaligrafi","Kaligrafi adalah seni menulis indah huruf Arab yang digunakan untuk menghias masjid dan Al-Qur'an. Seni ini berkembang karena Islam melarang penggambaran makhluk hidup dalam ibadah. Nilai yang terkandung dalam seni kaligrafi adalah...",["Mengagungkan wahyu Allah melalui keindahan tulisan dan kecintaan pada Al-Qur'an","Hanya sebagai hiasan tanpa makna","Untuk menyaingi seni Barat","Sebagai alat sihir","Tidak ada nilai agama"],0],
+["Arsitektur Masjid","Masjid-masjid kuno di Indonesia seperti Masjid Menara Kudus memiliki bentuk yang memadukan budaya Hindu dan Islam. Hal ini menunjukkan bahwa...",["Islam di Indonesia berkembang melalui akulturasi budaya yang harmonis","Islam menghapus semua budaya lokal","Masjid Kudus bukan masjid Islam","Budaya Hindu lebih unggul","Islam tidak memiliki arsitektur"],0],
+["Perdagangan dan Islam","Jalur perdagangan laut membuat Islam cepat menyebar karena pedagang Muslim dikenal jujur dan amanah. Akhlak pedagang ini membuat masyarakat lokal tertarik masuk Islam. Nilai utama yang dapat diteladani dari pedagang Muslim masa lalu adalah...",["Kejujuran, amanah, dan akhlak mulia dalam berdagang sebagai bentuk dakwah","Kecurangan dalam berdagang","Sikap sombong","Tidak peduli pelanggan","Hanya mencari untung"],0],
+["Tasawuf","Tasawuf berkembang sebagai upaya mendekatkan diri kepada Allah melalui penyucian jiwa. Tokoh tasawuf seperti Al-Ghazali menulis Ihya Ulumuddin. Dampak positif tasawuf bagi masyarakat adalah...",["Menumbuhkan akhlak mulia, zuhud, dan kepedulian sosial","Menjauhkan manusia dari masyarakat","Membuat orang malas bekerja","Menolak syariat","Mengajarkan kemiskinan mutlak"],0],
+["Fiqih","Fiqih adalah ilmu tentang hukum Islam yang mengatur ibadah dan muamalah. Imam Syafi'i adalah salah satu imam mazhab yang banyak diikuti di Indonesia. Pentingnya belajar fiqih bagi umat Islam adalah...",["Agar ibadah dan kehidupan sehari-hari sesuai dengan tuntunan syariat","Agar menjadi kaya","Agar terkenal","Tidak penting","Hanya untuk ulama"],0],
+["SKI","Sejarah Kebudayaan Islam mempelajari perkembangan Islam dari masa Nabi Muhammad SAW hingga masa kini, termasuk politik, ilmu pengetahuan, seni, dan budaya. Tujuan mempelajari SKI adalah...",["Mengambil hikmah dari masa lalu untuk membangun peradaban Islam yang lebih baik di masa depan","Hanya menghafal tahun","Untuk melupakan sejarah","Tidak ada manfaatnya","Agar bisa berdebat"],0]
+];
+for(let i=0;i<40;i++){let t=tambahan[i%tambahan.length]; bank.push([t[0],`Soal ${i+11}. `+t[1],t[2],t[3]]);}
+bank.forEach(b=>soalDefault.push({q:b[1],a:b[2],kunci:b[3],topik:b[0]}));
+soalDefault=soalDefault.slice(0,50);
+if(localStorage.getItem('soalCustom')){try{soalDefault=JSON.parse(localStorage.getItem('soalCustom'))}catch(e){}}
+let current=0,jawaban=Array(soalDefault.length).fill(null),pelanggaran=0,timerInt,sisa=90*60,siswa={};
+function showPage(id){document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);}
+function mulaiUjian(){if(!document.getElementById('agree').checked) return alert('Centang persetujuan 10 peraturan dulu!');let n=document.getElementById('nama').value.trim(),k=document.getElementById('kelas').value,no=document.getElementById('noUjian').value.trim();if(!n||!k||!no) return alert('Lengkapi Nama, Kelas, dan No Ujian!');siswa={nama:n,kelas:k,no:no};current=0;jawaban=Array(soalDefault.length).fill(null);pelanggaran=0;sisa=90*60;document.getElementById('infoPeserta').innerText=`${n} | ${k} | No: ${no}`;showPage('page-ujian');renderSoal();startTimer();aktifkanKeamanan();}
+function renderSoal(){let s=soalDefault[current];document.getElementById('nomorSoal').innerText=`Soal ${current+1} / ${soalDefault.length} - Topik: ${s.topik||'SKI'}`;document.getElementById('soalText').innerText=s.q;let html='';let huruf=['A','B','C','D','E'];s.a.forEach((opt,i)=>{html+=`<label class="opt ${jawaban[current]==i?'selected':''}"><input type="radio" name="opt" ${jawaban[current]==i?'checked':''} onclick="pilih(${i})"> <b>${huruf[i]}.</b> ${opt}</label>`});document.getElementById('opsi').innerHTML=html;let nav='';for(let i=0;i<soalDefault.length;i++){nav+=`<button class="${jawaban[i]!=null?'done':''} ${i==current?'active':''}" onclick="goSoal(${i})">${i+1}</button>`}document.getElementById('navSoal').innerHTML=nav;}
+function pilih(i){jawaban[current]=i;renderSoal();}
+function goSoal(i){current=i;renderSoal();}
+function nextSoal(){if(current<soalDefault.length-1){current++;renderSoal();}}
+function prevSoal(){if(current>0){current--;renderSoal();}}
+function startTimer(){clearInterval(timerInt);timerInt=setInterval(()=>{sisa--;let m=Math.floor(sisa/60),d=sisa%60;document.getElementById('timer').innerText=`Sisa Waktu: ${m}:${d<10?'0':''}${d} | Pelanggaran: ${pelanggaran}`;if(sisa<=0){clearInterval(timerInt);selesaiUjian(true);}},1000);}
+function selesaiUjian(auto=false){if(!auto && !confirm('Yakin kirim jawaban? Tidak bisa diubah lagi.')) return;clearInterval(timerInt);let benar=0;soalDefault.forEach((s,i)=>{if(jawaban[i]==s.kunci)benar++;});let nilai=Math.round(benar/soalDefault.length*100);let data=JSON.parse(localStorage.getItem('hasilSKI')||'[]');data.push({...siswa,nilai,benar,pelanggaran,tanggal:new Date().toLocaleString()});localStorage.setItem('hasilSKI',JSON.stringify(data));document.getElementById('hasilText').innerHTML=`<p>Nama: <b>${siswa.nama}</b><br>Kelas: ${siswa.kelas}<br>No Ujian: ${siswa.no}<br>Benar: ${benar} dari ${soalDefault.length}<br>Pelanggaran: ${pelanggaran}<br><h1>Nilai: ${nilai}</h1><p>${nilai>=75?'🎉 LULUS - Pertahankan!':'📚 BELUM LULUS - Tetap Semangat Belajar!'}</p></p>`;showPage('page-hasil');nonaktifkanKeamanan();}
+function loginGuru(){let id=document.getElementById('guruId').value.trim(),p=document.getElementById('guruPass').value.trim();if(id==='AGUNG121002'&&p==='AGUNG121002'){showPage('page-guru');tampilRekap();}else alert('ID atau Password Guru Salah!');}
+function tampilRekap(){let data=JSON.parse(localStorage.getItem('hasilSKI')||'[]');if(!data.length) document.getElementById('rekap').innerHTML='<p>Belum ada data nilai.</p>';else{let h='<table><tr><th>Nama</th><th>Kelas</th><th>No</th><th>Nilai</th><th>Benar</th><th>Pelanggaran</th><th>Tanggal</th></tr>';data.forEach(d=>h+=`<tr><td>${d.nama}</td><td>${d.kelas}</td><td>${d.no}</td><td><b>${d.nilai}</b></td><td>${d.benar}</td><td>${d.pelanggaran}</td><td>${d.tanggal}</td></tr>`);h+='</table>';document.getElementById('rekap').innerHTML=h;}}
+function hapusData(){if(confirm('Hapus semua nilai?')){localStorage.removeItem('hasilSKI');tampilRekap();}}
+function uploadSoalBaru(){try{let j=JSON.parse(document.getElementById('uploadSoal').value);if(j.length<1) throw 'kosong';localStorage.setItem('soalCustom',JSON.stringify(j));soalDefault=j;alert('Soal baru berhasil diupload! '+j.length+' soal.');}catch(e){alert('Format JSON salah! Cek template.');}}
+function resetSoal(){localStorage.removeItem('soalCustom');location.reload();}
+function downloadTemplate(){let t=JSON.stringify([{q:"Contoh soal panjang...",a:["Pilihan A","Pilihan B","Pilihan C","Pilihan D","Pilihan E"],kunci:0,topik:"Contoh"}],null,2);let blob=new Blob([t],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='template-soal-ski.json';a.click();}
+let keamananAktif=false;
+function triggerPelanggaran(msg){if(!keamananAktif) return;pelanggaran++;document.getElementById('blackMsg').innerText=msg+' | Total Pelanggaran: '+pelanggaran;let bs=document.getElementById('blackScreen');bs.style.display='flex';document.getElementById('timer').innerText=`Sisa Waktu: ... | Pelanggaran: ${pelanggaran} - LAYAR DIKUNCI`;}
+function unlockBlack(){document.getElementById('blackScreen').style.display='none';}
+function aktifkanKeamanan(){keamananAktif=true;document.addEventListener('copy',onCopy);document.addEventListener('cut',onCopy);document.addEventListener('contextmenu',e=>{e.preventDefault();triggerPelanggaran('Klik kanan terdeteksi!');});document.addEventListener('keydown',onKey);document.addEventListener('visibilitychange',onVis);window.addEventListener('blur',()=>triggerPelanggaran('Pindah halaman / aplikasi terdeteksi!'));window.addEventListener('resize',()=>{if(window.outerWidth-window.innerWidth>200||window.outerHeight-window.innerHeight>200) triggerPelanggaran('Belah layar / Developer Tools terdeteksi!');});}
+function nonaktifkanKeamanan(){keamananAktif=false;}
+function onCopy(e){e.preventDefault();triggerPelanggaran('Menyalin soal terdeteksi!');}
+function onKey(e){if((e.ctrlKey||e.metaKey)&&['c','x','v','u','s','p'].includes(e.key.toLowerCase())){e.preventDefault();triggerPelanggaran('Shortcut terlarang terdeteksi: Ctrl+'+e.key);}if(e.key==='PrintScreen'){navigator.clipboard.writeText('');triggerPelanggaran('Screenshot terdeteksi! (PrintScreen)');}if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))){e.preventDefault();triggerPelanggaran('Membuka Developer Tools terdeteksi!');}}
+function onVis(){if(document.hidden) triggerPelanggaran('Pindah Tab / Halaman terdeteksi! Ujian dikunci.');}
+</script>
+</body>
+</html>
